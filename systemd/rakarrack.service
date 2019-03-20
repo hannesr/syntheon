@@ -1,0 +1,16 @@
+[Unit]
+Description=Rakarrack
+After=jack.service
+Requires=jack.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+Environment=HOME=/root
+ExecStartPre=-/bin/sh -c "rakarrack -x 2>/opt/syntheon/data/rakarrack-bank.log"
+ExecStart=/usr/bin/env rakarrack --no-gui
+ExecStartPost=/opt/syntheon/systemd/jack_wait "rakarrack" 10
+
+[Install]
+WantedBy=multi-user.target

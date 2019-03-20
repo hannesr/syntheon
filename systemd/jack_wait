@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+  echo "usage: jack_wait <prog> <s>"
+  echo "  - waits max <s> seconds until <prog> publishes its jack connections"
+  exit 2
+fi
+
+# poll 10 seconds, or until interface opens
+for (( i=0; i<$2; i++ )); do
+  jack_lsp | grep "$1" &>/dev/null
+  test $? -eq 0 && break
+  sleep 0.5
+done
+
+# final test to determine if interface is open or not
+jack_lsp | grep "$1" &>/dev/null

@@ -1,0 +1,12 @@
+[Unit]
+Description=Syntheon
+After=jack.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+ExecStart=/usr/bin/env python /opt/syntheon/control/main.py
+
+[Install]
+WantedBy=multi-user.target

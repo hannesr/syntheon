@@ -1,0 +1,15 @@
+[Unit]
+Description=Jack audio daemon
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+#WorkingDirectory=/opt/syntheon
+Environment=JACK_NO_AUDIO_RESERVATION=1
+ExecStart=/usr/bin/jackd -R -d alsa
+ExecStartPost=/opt/syntheon/systemd/jack_wait "system" 5
+
+[Install]
+WantedBy=multi-user.target
