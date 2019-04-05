@@ -1,0 +1,18 @@
+[Unit]
+Description=ZynAddSubFx
+After=jack.service
+Requires=jack.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+Environment=HOME=/root
+ExecStart=/usr/bin/zynaddsubfx --no-gui
+ExecStartPost=/opt/syntheon/systemd/jack_wait "zynaddsubfx" 20
+ExecStartPost=/usr/bin/jack_connect zynaddsubfx:out_1 system:playback_1
+ExecStartPost=/usr/bin/jack_connect zynaddsubfx:out_2 system:playback_2
+ExecStartPost=-/usr/bin/aconnect "USB Midi" "ZynAddSubFX"
+
+[Install]
+WantedBy=multi-user.target

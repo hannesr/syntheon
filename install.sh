@@ -54,3 +54,11 @@ if [ $? -ne 0 ]; then
   systemctl enable rakarrack
   systemctl start rakarrack
 fi
+
+# zynaddsubfx installation
+systemctl is-active zynaddsubfx &>/dev/null
+if [ $? -ne 0 ]; then
+  ln -sf $TARGET_DIR/systemd/zynaddsubfx.service /etc/systemd/system/
+  systemctl daemon-reload
+  # note: service is started manually
+fi

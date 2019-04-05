@@ -9,6 +9,7 @@ import sys
 import platform
 import signal
 from RkCharacteristic import *
+from ZnCharacteristic import *
 
 #............................................
 
@@ -16,6 +17,8 @@ SERVICE     = '989e'
 RK_BANK_CS  = '9b43'
 RK_BANK     = '9b96'
 RK_PRESET   = '9d12'
+ZN_ONOFF    = '9e01'
+ZN_EFFECT   = '9e04'
 
 bleno = Bleno()
 
@@ -36,7 +39,9 @@ def onAdvertisingStart(error):
         'characteristics': [
           RkBankChecksum(RK_BANK_CS),
           RkBank(RK_BANK),
-          RkPreset(RK_PRESET)
+          RkPreset(RK_PRESET),
+          ZnOnOff(ZN_ONOFF),
+          ZnEffect(ZN_EFFECT)
         ]
       })
     ])
@@ -52,5 +57,3 @@ bleno.disconnect()
 
 print('... terminated.')
 sys.exit(0)
-
-
