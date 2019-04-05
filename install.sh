@@ -46,10 +46,11 @@ fi
 # rakarrack installation
 systemctl is-active rakarrack &>/dev/null
 if [ $? -ne 0 ]; then
+  # TODO: check if rakarrack configuration is in place
+  # if not, create configuration from scratch
+  # if it is, edit some keys
   ln -sf $TARGET_DIR/systemd/rakarrack.service /etc/systemd/system/
   systemctl daemon-reload
   systemctl enable rakarrack
   systemctl start rakarrack
 fi
-
-

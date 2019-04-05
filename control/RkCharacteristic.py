@@ -61,7 +61,7 @@ class RkPreset(Characteristic):
 
   def onReadRequest(self, offset, callback):
     print('... RkPreset - onReadRequest')
-    callback(Characteristic.RESULT_SUCCESS, self._value)
+    callback(Characteristic.RESULT_SUCCESS, self.value)
 
   def onWriteRequest(self, data, offset, withoutResponse, callback):
     print('... RkPreset - onWriteRequest')
@@ -90,5 +90,3 @@ class RkPreset(Characteristic):
   def store(self, preset):
     self.preset = int(preset)
     self.value = array.array('B', [self.preset])
-
-

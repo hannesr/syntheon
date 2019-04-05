@@ -25,28 +25,5 @@ class Midi:
     self.midi_out.send_message([176+channel, control, value])
 
   def pitchBend(self, channel, value):
-    # todo: calculate lsb and msb out of a singular value
-    self.midi_out.send_message([224+channel, lsb, msb])
-
-
-
-
-
-
-  # legacy thingies >>>
-  def setFxOn(self, value):
-    # only toggle is implemented
-    self.midi_out.send_message([176, 116, 124])
-
-  def setFxLevel(self, value):
-    value = value*127/100
-    if value < 1:
-      value = 1
-    if value > 127:
-      value = 127
-    self.midi_out.send_message([176, 12, int(value)])
-
-  def setPreset(self, value):
-    self.midi_out.send_message([192, int(value)])
-  # <<<
-
+    #self.midi_out.send_message([224+channel, lsb, msb])
+    pass
