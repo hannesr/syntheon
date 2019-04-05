@@ -62,3 +62,12 @@ if [ $? -ne 0 ]; then
   systemctl daemon-reload
   # note: service is started manually
 fi
+
+# syntheon control process installation
+systemctl is-active syntheon &>/dev/null
+if [ $? -ne 0 ]; then
+  ln -sf $TARGET_DIR/systemd/syntheon.service /etc/systemd/system/
+  systemctl daemon-reload
+  systemctl enable syntheon
+  systemctl start syntheon
+fi
