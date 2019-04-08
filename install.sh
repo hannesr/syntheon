@@ -32,7 +32,7 @@ echo "... copying files"
 mkdir -p $TARGET_DIR
 cp -r $SRC_DIR/systemd $TARGET_DIR
 cp -r $SRC_DIR/control $TARGET_DIR
-mkdir -p $TARGET_DIR/data
+cp -r $SRC_DIR/data $TARGET_DIR
 
 # jack installation
 systemctl is-active jack &>/dev/null

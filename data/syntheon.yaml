@@ -1,0 +1,21 @@
+header:
+  version: 0.1
+  description: Syntheon configuration file
+
+rakarrack:
+  reference: http://rakarrack.sourceforge.net/midiic.html
+  controls:
+    - title: FX% Balance
+      cc: 12
+    - title: Wah Wah Depth
+      cc: 1
+    - title: Chorus Depth
+      cc: 23
+    - title: Distortion Wet/Dry
+      cc: 30
+    - title: Reverb Wet/Dry
+      cc: 57
+  toggles:
+    - title: FX On/Off
+      cc: 116
+      val: 124

@@ -11,6 +11,7 @@ from Rakarrack import *
 
 rakarrackBank = Rakarrack()
 rakarrackMidi = Midi('rakarrack')
+config = Config()
 
 # see http://rakarrack.sourceforge.net/midiic.html
 CTL_REVERB = 57
@@ -90,3 +91,40 @@ class RkPreset(Characteristic):
   def store(self, preset):
     self.preset = int(preset)
     self.value = array.array('B', [self.preset])
+
+#............................................
+class RkEffectList(Characteristic):
+  def __init__(self, uuid):
+    Characteristic.__init__(self, {
+      'uuid': uuid,
+      'properties': ['read'],
+      'value': None
+    })
+
+  def onReadRequest(self, offset, callback):
+    print('... RkEffectList - onReadRequest')
+    config.serializeControlTitleList()
+    data = array.array('B', config.serializeControlTitleList())
+    print("... resp data is: "+str(data[offset:]))
+    callback(Characteristic.RESULT_SUCCESS, data[offset:])
+
+#............................................
+class RkEffect(Characteristic):
+  def __init__(self, uuid):
+    Characteristic.__init__(self, {
+      'uuid': uuid,
+      'properties': ['write'],
+      'value': None
+    })
+
+  def onWriteRequest(self, data, offset, withoutResponse, callback):
+    print('... RkEffect - onWriteRequest')
+    try:
+      for i in range(0, len(data)-1, 2):
+        ctl = config.getRakarrackControl(data[i])
+        val = config.getRakarrackScaledValue(data[i], data[i+1])
+        rakarrackMidi.controlChange(0, ctl, val)
+    except Exception as ex:
+      print('... RkEffect: something wrong')
+      print(ex)
+      callback(Characteristic.RESULT_UNLIKELY_ERROR)
