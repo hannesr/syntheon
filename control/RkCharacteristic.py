@@ -72,10 +72,6 @@ class RkPreset(Characteristic):
       if self.preset == preset:
         print('... preset no change')
         pass
-      elif self.preset == 0 and preset > 0:
-        print('... preset on and set to %d' % preset)
-        rakarrackMidi.controlChange(0, CTL_TOGGLE, VAL_FX)
-        rakarrackMidi.programChange(0, int(preset))
       elif self.preset > 0 and preset == 0:
         print('... preset off')
         rakarrackMidi.controlChange(0, CTL_TOGGLE, VAL_FX)
