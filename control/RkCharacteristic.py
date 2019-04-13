@@ -116,6 +116,7 @@ class RkEffect(Characteristic):
         ctl = config.getRakarrackControl(data[i])
         val = config.getRakarrackScaledValue(data[i], data[i+1])
         rakarrackMidi.controlChange(0, ctl, val)
+      callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:
       print('... RkEffect: something wrong')
       print(ex)
