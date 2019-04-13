@@ -58,11 +58,12 @@ class RkPreset(Characteristic):
       'properties': ['read', 'write', 'notify'],
       'value': None
     })
-    self.store(0)
+    self.preset = 0
 
   def onReadRequest(self, offset, callback):
     print('... RkPreset - onReadRequest')
-    callback(Characteristic.RESULT_SUCCESS, self.value)
+    value = array.array('B', [self.preset])
+    callback(Characteristic.RESULT_SUCCESS, value)
 
   def onWriteRequest(self, data, offset, withoutResponse, callback):
     print('... RkPreset - onWriteRequest')
@@ -81,16 +82,12 @@ class RkPreset(Characteristic):
       else:
         print('... preset set to %d' % preset)
         rakarrackMidi.programChange(0, int(preset))
-      self.store(preset)
+      self.preset = preset
       callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:
       print('... write preset: something wrong')
       print(ex)
       callback(Characteristic.RESULT_UNLIKELY_ERROR)
-
-  def store(self, preset):
-    self.preset = int(preset)
-    self.value = array.array('B', [self.preset])
 
 #............................................
 class RkEffectList(Characteristic):
