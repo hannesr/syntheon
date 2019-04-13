@@ -4,6 +4,7 @@
 #............................................
 
 import yaml
+import json
 
 SCALE_MAX=127
 SCALE_MIN=1
@@ -11,7 +12,7 @@ SCALE_MIN=1
 class Config:
   def __init__(self):
     try:
-      load()
+      self.load()
     except yaml.YAMLError as ex:
       print("Configuration error: "+str(ex));
       makeDefault();

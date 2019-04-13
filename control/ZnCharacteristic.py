@@ -6,7 +6,7 @@
 from pybleno import Characteristic
 import array
 from Midi import *
-from ZynAdSubFx import *
+from Zynaddsubfx import *
 
 
 zynService = Zynaddsubfx()

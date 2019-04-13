@@ -7,7 +7,7 @@ from pybleno import Characteristic
 import array
 from Midi import *
 from Rakarrack import *
-
+from Config import *
 
 rakarrackBank = Rakarrack()
 rakarrackMidi = Midi('rakarrack')
@@ -30,7 +30,7 @@ class RkBank(Characteristic):
     })
 
   def onReadRequest(self, offset, callback):
-    print('... RkBank - onReadRequest, offset=%d' % offset)
+    print('... RkBank - onReadRequest, offset={}'.format(offset))
     data = array.array('B', rakarrackBank.serialize())
     print("... resp data is: "+str(data[offset:]))
     callback(Characteristic.RESULT_SUCCESS, data[offset:])
@@ -102,8 +102,7 @@ class RkEffectList(Characteristic):
     })
 
   def onReadRequest(self, offset, callback):
-    print('... RkEffectList - onReadRequest')
-    config.serializeControlTitleList()
+    print('... RkEffectList - onReadRequest (offset={})'.format(offset))
     data = array.array('B', config.serializeControlTitleList())
     print("... resp data is: "+str(data[offset:]))
     callback(Characteristic.RESULT_SUCCESS, data[offset:])

@@ -76,6 +76,8 @@ fi
 systemctl is-active syntheon &>/dev/null
 if [ $? -ne 0 ]; then
   echo "... installing syntheon service"
+  test -f $TARGET_DIR/data/syntheon.yaml || \
+    cp $TARGET_DIR/data/syntheon.yaml.example $TARGET_DIR/data/syntheon.yaml
   ln -sf $TARGET_DIR/systemd/syntheon.service /etc/systemd/system/
   systemctl daemon-reload
   systemctl enable syntheon

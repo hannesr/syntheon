@@ -17,7 +17,7 @@ class Zynaddsubfx:
     return self.status
 
   def setStatus(self, status):
-    if status == self.status
+    if status == self.status:
       return # no action
     cmd = 'start' if status else 'stop'
     rc = subprocess.call(['systemctl', cmd, 'zynaddsubfx'])
@@ -29,7 +29,7 @@ class Zynaddsubfx:
     return self.effectStatus
 
   def setEffectStatus(self, status):
-    if status == self.effectStatus
+    if status == self.effectStatus:
       return # no action
     to_conn = 'rakarrack:in' if status else 'system:playback'
     to_disc = 'system:playback' if status else 'rakarrack:in'
