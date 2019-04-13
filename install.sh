@@ -62,7 +62,7 @@ else
 fi
 
 # zynaddsubfx installation
-systemctl is-active zynaddsubfx &>/dev/null
+test -f $TARGET_DIR/systemd/zynaddsubfx.service
 if [ $? -ne 0 ]; then
   echo "... installing zynaddsubfx service"
   ln -sf $TARGET_DIR/systemd/zynaddsubfx.service /etc/systemd/system/
