@@ -51,6 +51,37 @@ class RkBankChecksum(Characteristic):
     callback(Characteristic.RESULT_SUCCESS, data)
 
 #............................................
+class RkPresetOn(Characteristic):
+  def __init__(self):
+    Characteristic.__init__(self, {
+      'uuid': '9d10',
+      'properties': ['read', 'write', 'notify'],
+      'value': None
+    })
+    self.active = 0
+
+  def onReadRequest(self, offset, callback):
+    print('... RkPresetOn - onReadRequest')
+    value = array.array('B', [self.active])
+    callback(Characteristic.RESULT_SUCCESS, value)
+
+  def onWriteRequest(self, data, offset, withoutResponse, callback):
+    print('... RkPresetOn - onWriteRequest')
+    try:
+      active = data[0]
+      if self.active == active:
+        print('... RkPresetOn: no change')
+      else:
+        print('... RkPresetOn: {} -> {}'.format(self.active, active))
+        rakarrackMidi.controlChange(0, CTL_TOGGLE, VAL_FX)
+      self.active = active
+      callback(Characteristic.RESULT_SUCCESS)
+    except Exception as ex:
+      print('... write preset: something wrong')
+      print(ex)
+      callback(Characteristic.RESULT_UNLIKELY_ERROR)
+
+#............................................
 class RkPreset(Characteristic):
   def __init__(self):
     Characteristic.__init__(self, {
@@ -70,13 +101,9 @@ class RkPreset(Characteristic):
     try:
       preset = data[0]
       if self.preset == preset:
-        print('... preset no change')
-        pass
-      elif self.preset > 0 and preset == 0:
-        print('... preset off')
-        rakarrackMidi.controlChange(0, CTL_TOGGLE, VAL_FX)
+        print('... RkPreset: no change')
       else:
-        print('... preset set to %d' % preset)
+        print('... RkPreset: {} -> {}'.format(self.preset -> preset))
         rakarrackMidi.programChange(0, int(preset))
       self.preset = preset
       callback(Characteristic.RESULT_SUCCESS)

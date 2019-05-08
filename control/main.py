@@ -34,6 +34,7 @@ def onAdvertisingStart(error):
         'characteristics': [
           RkBankChecksum(),
           RkBank(),
+          RkPresetOn(),
           RkPreset(),
           RkEffectList(),
           RkEffect(),
