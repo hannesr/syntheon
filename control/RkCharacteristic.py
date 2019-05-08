@@ -22,9 +22,9 @@ VAL_FX = 124
 #............................................
 class RkBank(Characteristic):
 
-  def __init__(self, uuid):
+  def __init__(self):
     Characteristic.__init__(self, {
-      'uuid': uuid,
+      'uuid': '9b96',
       'properties': ['read'],
       'value': None
     })
@@ -38,9 +38,9 @@ class RkBank(Characteristic):
 #............................................
 class RkBankChecksum(Characteristic):
 
-  def __init__(self, uuid):
+  def __init__(self):
     Characteristic.__init__(self, {
-      'uuid': uuid,
+      'uuid': '9b43',
       'properties': ['read'],
       'value': None
     })
@@ -52,9 +52,9 @@ class RkBankChecksum(Characteristic):
 
 #............................................
 class RkPreset(Characteristic):
-  def __init__(self, uuid):
+  def __init__(self):
     Characteristic.__init__(self, {
-      'uuid': uuid,
+      'uuid': '9d12',
       'properties': ['read', 'write', 'notify'],
       'value': None
     })
@@ -87,9 +87,9 @@ class RkPreset(Characteristic):
 
 #............................................
 class RkEffectList(Characteristic):
-  def __init__(self, uuid):
+  def __init__(self):
     Characteristic.__init__(self, {
-      'uuid': uuid,
+      'uuid': '9d19',
       'properties': ['read'],
       'value': None
     })
@@ -102,9 +102,9 @@ class RkEffectList(Characteristic):
 
 #............................................
 class RkEffect(Characteristic):
-  def __init__(self, uuid):
+  def __init__(self):
     Characteristic.__init__(self, {
-      'uuid': uuid,
+      'uuid': '9d1a',
       'properties': ['write'],
       'value': None
     })

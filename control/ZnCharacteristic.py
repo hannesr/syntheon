@@ -14,9 +14,9 @@ zynService = Zynaddsubfx()
 #............................................
 class ZnOnOff(Characteristic):
 
-  def __init__(self, uuid):
+  def __init__(self):
     Characteristic.__init__(self, {
-      'uuid': uuid,
+      'uuid': '9e01',
       'properties': ['read', 'write'],
       'value': None
     })
@@ -42,9 +42,9 @@ class ZnOnOff(Characteristic):
 
 #............................................
 class ZnEffect(Characteristic):
-  def __init__(self, uuid):
+  def __init__(self):
     Characteristic.__init__(self, {
-      'uuid': uuid,
+      'uuid': '9e04',
       'properties': ['read', 'write'],
       'value': None
     })
