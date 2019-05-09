@@ -103,7 +103,7 @@ class RkPreset(Characteristic):
       if self.preset == preset:
         print('... RkPreset: no change')
       else:
-        print('... RkPreset: {} -> {}'.format(self.preset -> preset))
+        print('... RkPreset: {} -> {}'.format(self.preset, preset))
         rakarrackMidi.programChange(0, int(preset))
       self.preset = preset
       callback(Characteristic.RESULT_SUCCESS)
@@ -113,7 +113,7 @@ class RkPreset(Characteristic):
       callback(Characteristic.RESULT_UNLIKELY_ERROR)
 
 #............................................
-class RkEffectList(Characteristic):
+class RkControlList(Characteristic):
   def __init__(self):
     Characteristic.__init__(self, {
       'uuid': '9d19',
@@ -122,13 +122,13 @@ class RkEffectList(Characteristic):
     })
 
   def onReadRequest(self, offset, callback):
-    print('... RkEffectList - onReadRequest (offset={})'.format(offset))
-    data = array.array('B', config.serializeControlTitleList())
+    print('... RkControlList - onReadRequest (offset={})'.format(offset))
+    data = array.array('B', config.serializeControlTitleList("rakarrack"))
     print("... resp data is: "+str(data[offset:]))
     callback(Characteristic.RESULT_SUCCESS, data[offset:])
 
 #............................................
-class RkEffect(Characteristic):
+class RkControls(Characteristic):
   def __init__(self):
     Characteristic.__init__(self, {
       'uuid': '9d1a',
@@ -137,7 +137,7 @@ class RkEffect(Characteristic):
     })
 
   def onWriteRequest(self, data, offset, withoutResponse, callback):
-    print('... RkEffect - onWriteRequest')
+    print('... RkControls - onWriteRequest')
     try:
       for i in range(0, len(data)-1, 2):
         ctl = config.getRakarrackControl(data[i])
@@ -145,6 +145,6 @@ class RkEffect(Characteristic):
         rakarrackMidi.controlChange(0, ctl, val)
       callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:
-      print('... RkEffect: something wrong')
+      print('... RkControls: something wrong')
       print(ex)
       callback(Characteristic.RESULT_UNLIKELY_ERROR)

@@ -9,6 +9,8 @@ rakarrack:
       cc: 12
     - title: Wah Wah Depth
       cc: 1
+    - title: Phaser depth
+      cc: 21
     - title: Chorus Depth
       cc: 23
     - title: Distortion Wet/Dry
@@ -19,3 +21,11 @@ rakarrack:
     - title: FX On/Off
       cc: 116
       val: 124
+
+zynaddsubfx:
+  reference: none
+  controls:
+    - title: Volume
+      cc: 7
+    - title: Modulation
+      cc: 7

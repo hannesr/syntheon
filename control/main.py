@@ -36,10 +36,12 @@ def onAdvertisingStart(error):
           RkBank(),
           RkPresetOn(),
           RkPreset(),
-          RkEffectList(),
-          RkEffect(),
+          RkControlList(),
+          RkControls(),
           ZnOnOff(),
-          ZnEffect()
+          ZnEffect(),
+          ZnControlList(),
+          ZnControls()
         ]
       })
     ])

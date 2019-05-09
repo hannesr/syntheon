@@ -24,9 +24,9 @@ class Config:
   def makeDefault(self):
     self.config = {"effects": []}
 
-  def serializeControlTitleList(self):
+  def serializeControlTitleList(self, program):
     controls = []
-    for c in self.config["rakarrack"]["controls"]:
+    for c in self.config[program]["controls"]:
       controls.append(c["title"])
     return json.dumps(controls)
 
