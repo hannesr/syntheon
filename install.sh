@@ -44,6 +44,7 @@ if [ $? -ne 0 ]; then
   systemctl start jack
 else
   echo "... jack service already installed"
+  systemctl daemon-reload
 fi
 
 # rakarrack installation
@@ -59,6 +60,8 @@ if [ $? -ne 0 ]; then
   systemctl start rakarrack
 else
   echo "... rakarrack service already installed"
+  systemctl daemon-reload
+  systemctl restart rakarrack
 fi
 
 # zynaddsubfx installation
@@ -70,6 +73,7 @@ if [ $? -ne 0 ]; then
   # note: service is started manually
 else
   echo "... zynaddsubfx service already installed"
+  systemctl daemon-reload
 fi
 
 # syntheon control process installation
@@ -84,6 +88,8 @@ if [ $? -ne 0 ]; then
   systemctl start syntheon
 else
   echo "... syntheon service already installed"
+  systemctl daemon-reload
+  systemctl restart syntheon
 fi
 
 echo "... install complete"
