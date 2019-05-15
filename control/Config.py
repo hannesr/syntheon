@@ -26,8 +26,11 @@ class Config:
 
   def serializeControlTitleList(self, program):
     controls = []
-    for c in self.config[program]["controls"]:
-      controls.append(c["title"])
+    try:
+      for c in self.config[program]["controls"]:
+        controls.append(c["title"])
+    except Exception as ex:
+      print('... Config: bad section '+program)
     return json.dumps(controls)
 
   def getRakarrackControl(self, ix):

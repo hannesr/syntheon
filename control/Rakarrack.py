@@ -14,7 +14,7 @@ class Rakarrack:
     self.loadBank()
 
   def loadBank(self):
-    print("... reading bank");
+    print("... Rakarrack: reading bank");
     bank = [None] * 64
     for row in open("/opt/syntheon/data/rakarrack-bank.log", "r"):
       entry = row.strip().split(':')
@@ -26,8 +26,8 @@ class Rakarrack:
     print("... bank is now: "+str(bank))
     self.bank = bank
 
-  def serialize(self):
+  def serializeBank(self):
     return json.dumps(self.bank)
 
-  def checksum(self):
+  def bankChecksum(self):
     return hashlib.md5(str(self.bank)).hexdigest()[0:20]

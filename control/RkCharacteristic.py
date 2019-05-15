@@ -9,7 +9,7 @@ from Midi import *
 from Rakarrack import *
 from Config import *
 
-rakarrackBank = Rakarrack()
+rakarrackService = Rakarrack()
 rakarrackMidi = Midi('rakarrack')
 config = Config()
 
@@ -31,7 +31,7 @@ class RkBank(Characteristic):
 
   def onReadRequest(self, offset, callback):
     print('... RkBank - onReadRequest, offset={}'.format(offset))
-    data = array.array('B', rakarrackBank.serialize())
+    data = array.array('B', rakarrackService.serializeBank())
     print("... resp data is: "+str(data[offset:]))
     callback(Characteristic.RESULT_SUCCESS, data[offset:])
 
@@ -47,7 +47,7 @@ class RkBankChecksum(Characteristic):
 
   def onReadRequest(self, offset, callback):
     print('... RkBankChecksum - onReadRequest')
-    data = array.array('B', rakarrackBank.checksum())
+    data = array.array('B', rakarrackService.bankChecksum())
     callback(Characteristic.RESULT_SUCCESS, data)
 
 #............................................
@@ -123,13 +123,7 @@ class RkControlList(Characteristic):
 
   def onReadRequest(self, offset, callback):
     print('... RkControlList - onReadRequest (offset={})'.format(offset))
-    list = []
-    try:
-      list = config.serializeControlTitleList("rakarrack")
-    except Exception as ex:
-      print('... RkControlList: something wrong')
-      print(ex)
-    data = array.array('B', list)
+    data = array.array('B', config.serializeControlTitleList("rakarrack"))
     print("... resp data is: "+str(data[offset:]))
     callback(Characteristic.RESULT_SUCCESS, data[offset:])
 
