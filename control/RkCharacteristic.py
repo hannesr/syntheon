@@ -51,7 +51,7 @@ class RkBankChecksum(Characteristic):
     callback(Characteristic.RESULT_SUCCESS, data)
 
 #............................................
-class RkPresetOn(Characteristic):
+class RkState(Characteristic):
   def __init__(self):
     Characteristic.__init__(self, {
       'uuid': '9d10',
@@ -61,18 +61,18 @@ class RkPresetOn(Characteristic):
     self.active = 0
 
   def onReadRequest(self, offset, callback):
-    print('... RkPresetOn - onReadRequest')
+    print('... RkState - onReadRequest')
     value = array.array('B', [self.active])
     callback(Characteristic.RESULT_SUCCESS, value)
 
   def onWriteRequest(self, data, offset, withoutResponse, callback):
-    print('... RkPresetOn - onWriteRequest')
+    print('... RkState - onWriteRequest')
     try:
       active = data[0]
       if self.active == active:
-        print('... RkPresetOn: no change')
+        print('... RkState: no change')
       else:
-        print('... RkPresetOn: {} -> {}'.format(self.active, active))
+        print('... RkState: {} -> {}'.format(self.active, active))
         rakarrackMidi.controlChange(0, CTL_TOGGLE, VAL_FX)
       self.active = active
       callback(Characteristic.RESULT_SUCCESS)
@@ -128,7 +128,7 @@ class RkControlList(Characteristic):
     callback(Characteristic.RESULT_SUCCESS, data[offset:])
 
 #............................................
-class RkControls(Characteristic):
+class RkControl(Characteristic):
   def __init__(self):
     Characteristic.__init__(self, {
       'uuid': '9d1a',
@@ -137,7 +137,7 @@ class RkControls(Characteristic):
     })
 
   def onWriteRequest(self, data, offset, withoutResponse, callback):
-    print('... RkControls - onWriteRequest')
+    print('... RkControl - onWriteRequest')
     try:
       for i in range(0, len(data)-1, 2):
         ctl = config.getRakarrackControl(data[i])
@@ -145,6 +145,6 @@ class RkControls(Characteristic):
         rakarrackMidi.controlChange(0, ctl, val)
       callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:
-      print('... RkControls: something wrong')
+      print('... RkControl: something wrong')
       print(ex)
       callback(Characteristic.RESULT_UNLIKELY_ERROR)

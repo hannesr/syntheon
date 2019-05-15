@@ -13,7 +13,7 @@ zynService = Zynaddsubfx()
 zynMidi = Midi('zynaddsubfx')
 
 #............................................
-class ZnOnOff(Characteristic):
+class ZnServiceOn(Characteristic):
 
   def __init__(self):
     Characteristic.__init__(self, {
@@ -23,26 +23,26 @@ class ZnOnOff(Characteristic):
     })
 
   def onReadRequest(self, offset, callback):
-    print('... ZnOnOff - onReadRequest')
+    print('... ZnServiceOn - onReadRequest')
     value = 1 if zynService.getStatus() else 0
     data = array.array('B', [value])
     callback(Characteristic.RESULT_SUCCESS, data)
 
   def onWriteRequest(self, data, offset, withoutResponse, callback):
     try:
-      print('... ZnOnOff - onWriteRequest '+str(data[0]))
+      print('... ZnServiceOn - onWriteRequest '+str(data[0]))
       zynService.setStatus(bool(data[0]))
       if bool(data[0]):
         zynMidi.reset()
         zynMidi.programChange(0, 1)
       callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:
-      print('... ZnOnOff: something wrong')
+      print('... ZnServiceOn: something wrong')
       print(ex)
       callback(Characteristic.RESULT_UNLIKELY_ERROR)
 
 #............................................
-class ZnEffect(Characteristic):
+class ZnEffectOn(Characteristic):
   def __init__(self):
     Characteristic.__init__(self, {
       'uuid': '9e04',
@@ -51,18 +51,18 @@ class ZnEffect(Characteristic):
     })
 
   def onReadRequest(self, offset, callback):
-    print('... ZnEffect - onReadRequest')
+    print('... ZnEffectOn - onReadRequest')
     value = 1 if zynService.getEffectStatus() else 0
     data = array.array('B', [value])
     callback(Characteristic.RESULT_SUCCESS, data)
 
   def onWriteRequest(self, data, offset, withoutResponse, callback):
     try:
-      print('... ZnEffect - onWriteRequest '+str(data[0]))
+      print('... ZnEffectOn - onWriteRequest '+str(data[0]))
       zynService.setEffectStatus(bool(data[0]))
       callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:
-      print('... write preset: something wrong')
+      print('... ZnEffectOn: something wrong')
       print(ex)
       callback(Characteristic.RESULT_UNLIKELY_ERROR)
 
@@ -82,7 +82,7 @@ class ZnControlList(Characteristic):
     callback(Characteristic.RESULT_SUCCESS, data[offset:])
 
 #............................................
-class ZnControls(Characteristic):
+class ZnControl(Characteristic):
   def __init__(self):
     Characteristic.__init__(self, {
       'uuid': '9e0a',
@@ -92,16 +92,16 @@ class ZnControls(Characteristic):
     self.volume = 100
 
   def onReadRequest(self, offset, callback):
-    print('... ZnControls - onReadRequest')
+    print('... ZnControl - onReadRequest')
     data = array.array('B', [self.volume])
     callback(Characteristic.RESULT_SUCCESS, data)
 
   def onWriteRequest(self, data, offset, withoutResponse, callback):
     try:
-      print('... ZnControls - onWriteRequest '+str(data[0]))
+      print('... ZnControl - onWriteRequest '+str(data[0]))
       zynMidi.controlChange(0, Midi.VOLUME, )
       callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:
-      print('... write preset: something wrong')
+      print('... ZnControl: something wrong')
       print(ex)
       callback(Characteristic.RESULT_UNLIKELY_ERROR)

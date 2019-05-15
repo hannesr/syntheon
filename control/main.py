@@ -34,14 +34,14 @@ def onAdvertisingStart(error):
         'characteristics': [
           RkBankChecksum(),
           RkBank(),
-          RkPresetOn(),
+          RkState(),
           RkPreset(),
           RkControlList(),
-          RkControls(),
-          ZnOnOff(),
-          ZnEffect(),
+          RkControl(),
+          ZnServiceOn(),
+          ZnEffectOn(),
           ZnControlList(),
-          ZnControls()
+          ZnControl()
         ]
       })
     ])
