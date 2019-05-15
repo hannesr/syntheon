@@ -20,6 +20,7 @@ class Rakarrack:
       entry = row.strip().split(':')
       if len(entry)==3 and entry[0]=='RKR_BANK_NAME' and len(entry[2])>0:
         bank[int(entry[1])] = entry[2]
+    bank.pop(0) # index 0 is empty
     while bank[-1] is None:
        bank.pop()
     print("... bank is now: "+str(bank))

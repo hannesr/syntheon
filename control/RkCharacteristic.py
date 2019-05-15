@@ -104,7 +104,7 @@ class RkPreset(Characteristic):
         print('... RkPreset: no change')
       else:
         print('... RkPreset: {} -> {}'.format(self.preset, preset))
-        rakarrackMidi.programChange(0, int(preset))
+        rakarrackMidi.programChange(0, int(preset)+1)
       self.preset = preset
       callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:
