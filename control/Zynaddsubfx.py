@@ -4,6 +4,7 @@
 #............................................
 
 import subprocess
+import os
 
 #............................................
 
@@ -12,6 +13,7 @@ class Zynaddsubfx:
   def __init__(self, config):
     self.status = False
     self.effectStatus = False
+    self.loadBank(config.bankPath('zynaddsubfx'))
 
   def getStatus(self):
     return self.status
@@ -40,3 +42,21 @@ class Zynaddsubfx:
     if rc1 != 0 or rc2 != 0 or rc3 != 0 or rc4 != 0:
       raise RuntimeError('could not connect zynaddsubfx audio')
     self.effectStatus = status
+
+  def loadBank(self, bankPath):
+    print("... Zynaddsubfx: reading bank");
+    bank = [None] * 64
+    for f in os.listdir(bankPath):
+      entry = row.strip().split('-',1)
+      bank[int(entry[0])] = entry[1]
+    bank.pop(0) # index 0 is empty
+    while bank[-1] is None:
+       bank.pop()
+    print("... bank is now: "+str(bank))
+    self.bank = bank
+
+  def serializeBank(self):
+    return json.dumps(self.bank)
+
+  def bankChecksum(self):
+    return hashlib.md5(str(self.bank)).hexdigest()[0:20]

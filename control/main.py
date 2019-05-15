@@ -38,8 +38,11 @@ def onAdvertisingStart(error):
           RkPreset(),
           RkControlList(),
           RkControl(),
+          ZnBankChecksum(),
+          ZnBank(),
           ZnServiceState(),
           ZnEffectState(),
+          ZnPreset(),
           ZnControlList(),
           ZnControl()
         ]
