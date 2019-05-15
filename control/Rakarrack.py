@@ -10,13 +10,13 @@ import json
 
 class Rakarrack:
 
-  def __init__(self):
-    self.loadBank()
+  def __init__(self, config):
+    self.loadBank(config.bankPath('rakarrack'))
 
-  def loadBank(self):
+  def loadBank(self, bankPath):
     print("... Rakarrack: reading bank");
     bank = [None] * 64
-    for row in open("/opt/syntheon/data/rakarrack-bank.log", "r"):
+    for row in open(bankPath, "r"):
       entry = row.strip().split(':')
       if len(entry)==3 and entry[0]=='RKR_BANK_NAME' and len(entry[2])>0:
         bank[int(entry[1])] = entry[2]

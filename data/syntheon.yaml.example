@@ -4,6 +4,7 @@ header:
 
 rakarrack:
   reference: http://rakarrack.sourceforge.net/midiic.html
+  bank: /opt/syntheon/data/rakarrack-bank.log
   controls:
     - title: FX% Balance
       cc: 12
@@ -24,6 +25,7 @@ rakarrack:
 
 zynaddsubfx:
   reference: none
+  bank: /root/banks/Syntheon
   controls:
     - title: Volume
       cc: 7

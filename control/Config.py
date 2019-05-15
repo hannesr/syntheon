@@ -24,6 +24,9 @@ class Config:
   def makeDefault(self):
     self.config = {"effects": []}
 
+  def bankPath(self, program):
+    return self.config[program]["bank"]
+
   def serializeControlTitleList(self, program):
     controls = []
     try:

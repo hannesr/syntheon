@@ -9,9 +9,9 @@ from Midi import *
 from Rakarrack import *
 from Config import *
 
-rakarrackService = Rakarrack()
-rakarrackMidi = Midi('rakarrack')
 config = Config()
+rakarrackService = Rakarrack(config)
+rakarrackMidi = Midi('rakarrack')
 
 # see http://rakarrack.sourceforge.net/midiic.html
 CTL_REVERB = 57

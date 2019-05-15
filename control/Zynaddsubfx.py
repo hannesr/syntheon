@@ -9,7 +9,7 @@ import subprocess
 
 class Zynaddsubfx:
 
-  def __init__(self):
+  def __init__(self, config):
     self.status = False
     self.effectStatus = False
 

@@ -9,10 +9,9 @@ from Midi import *
 from Zynaddsubfx import *
 from Config import *
 
-
-zynService = Zynaddsubfx()
-zynMidi = Midi('zynaddsubfx')
 config = Config()
+zynService = Zynaddsubfx(config)
+zynMidi = Midi('zynaddsubfx')
 
 #............................................
 class ZnServiceState(Characteristic):
