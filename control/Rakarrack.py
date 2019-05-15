@@ -30,4 +30,3 @@ class Rakarrack:
 
   def checksum(self):
     return hashlib.md5(str(self.bank)).hexdigest()[0:20]
-

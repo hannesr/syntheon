@@ -123,7 +123,13 @@ class RkControlList(Characteristic):
 
   def onReadRequest(self, offset, callback):
     print('... RkControlList - onReadRequest (offset={})'.format(offset))
-    data = array.array('B', config.serializeControlTitleList("rakarrack"))
+    list = []
+    try:
+      list = config.serializeControlTitleList("rakarrack")
+    except Exception as ex:
+      print('... RkControlList: something wrong')
+      print(ex)
+    data = array.array('B', list)
     print("... resp data is: "+str(data[offset:]))
     callback(Characteristic.RESULT_SUCCESS, data[offset:])
 

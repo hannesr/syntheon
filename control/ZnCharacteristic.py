@@ -7,10 +7,12 @@ from pybleno import Characteristic
 import array
 from Midi import *
 from Zynaddsubfx import *
+from Config import *
 
 
 zynService = Zynaddsubfx()
 zynMidi = Midi('zynaddsubfx')
+config = Config()
 
 #............................................
 class ZnServiceOn(Characteristic):
@@ -77,7 +79,13 @@ class ZnControlList(Characteristic):
 
   def onReadRequest(self, offset, callback):
     print('... ZnControlList - onReadRequest (offset={})'.format(offset))
-    data = array.array('B', config.serializeControlTitleList("zynaddsubfx"))
+    list = []
+    try:
+      list = config.serializeControlTitleList("zynaddsubfx")
+    except Exception as ex:
+      print('... ZnControlList: something wrong')
+      print(ex)
+    data = array.array('B', list[offset:])
     print("... resp data is: "+str(data[offset:]))
     callback(Characteristic.RESULT_SUCCESS, data[offset:])
 
