@@ -36,9 +36,12 @@ class Config:
       print('... Config: bad section '+program)
     return json.dumps(controls)
 
-  def getRakarrackControl(self, ix):
-    return self.config["rakarrack"]["controls"][ix]["cc"]
+  def getControl(self, program, ix):
+    return self.config[program]["controls"][ix]["cc"]
 
-  def getRakarrackScaledValue(self, ix, value):
+  def getScaledValue(self, program, ix, value):
     # for now, scales everything in 0-100 ==> 1-127
+    # consider having a separate scale for each confirurable section
+    # or perhaps a default scale 1-127, and possibility to override it
+    # for each control individually
     return value*(SCALE_MAX-SCALE_MIN)/100+1

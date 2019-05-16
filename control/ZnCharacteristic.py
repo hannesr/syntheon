@@ -111,7 +111,7 @@ class ZnPreset(Characteristic):
     print('... ZnPreset - onWriteRequest')
     try:
       preset = data[0]
-      zynMidi.programChange(0, int(preset)+1)
+      zynMidi.programChange(0, int(preset))
       callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:
       print('... write preset: something wrong')
@@ -138,21 +138,17 @@ class ZnControl(Characteristic):
   def __init__(self):
     Characteristic.__init__(self, {
       'uuid': '9e0a',
-      'properties': ['read', 'write'],
+      'properties': ['write'],
       'value': None
     })
-    self.volume = 100
-
-  def onReadRequest(self, offset, callback):
-    print('... ZnControl - onReadRequest')
-    data = array.array('B', [self.volume])
-    callback(Characteristic.RESULT_SUCCESS, data)
 
   def onWriteRequest(self, data, offset, withoutResponse, callback):
-    # täähän on kesken !
+    print('... ZnControl - onWriteRequest')
     try:
-      print('... ZnControl - onWriteRequest '+str(data[0]))
-      zynMidi.controlChange(0, Midi.VOLUME, )
+      for i in range(0, len(data)-1, 2):
+        ctl = config.getControl("zynaddsubfx", data[i])
+        val = config.getScaledValue("zynaddsubfx", data[i], data[i+1])
+        zynMidi.controlChange(0, ctl, val)
       callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:
       print('... ZnControl: something wrong')

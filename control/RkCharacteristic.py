@@ -140,8 +140,8 @@ class RkControl(Characteristic):
     print('... RkControl - onWriteRequest')
     try:
       for i in range(0, len(data)-1, 2):
-        ctl = config.getRakarrackControl(data[i])
-        val = config.getRakarrackScaledValue(data[i], data[i+1])
+        ctl = config.getControl("rakarrack", data[i])
+        val = config.getScaledValue("rakarrack", data[i], data[i+1])
         rakarrackMidi.controlChange(0, ctl, val)
       callback(Characteristic.RESULT_SUCCESS)
     except Exception as ex:

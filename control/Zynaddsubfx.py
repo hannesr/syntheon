@@ -5,6 +5,8 @@
 
 import subprocess
 import os
+import hashlib
+import json
 
 #............................................
 
@@ -47,8 +49,8 @@ class Zynaddsubfx:
     print("... Zynaddsubfx: reading bank");
     bank = [None] * 64
     for f in os.listdir(bankPath):
-      entry = row.strip().split('-',1)
-      bank[int(entry[0])] = entry[1]
+      entry = f.strip().split('-',1)
+      bank[int(entry[0])] = entry[1].replace('.xiz','')
     bank.pop(0) # index 0 is empty
     while bank[-1] is None:
        bank.pop()

@@ -18,7 +18,7 @@ class Midi:
   def reset(self):
     self.midi_out = rtmidi.MidiOut()
     ports = self.midi_out.get_ports()
-    matching_ports = [i for i, l in enumerate(ports) if self.program in l]
+    matching_ports = [i for i, l in enumerate(ports) if self.program.lower() in l.lower()]
     if matching_ports:
       self.midi_out.open_port(matching_ports[0])
     else:
